@@ -1,0 +1,4 @@
+test/test_pep257.py
+test/test_flake8.py
+test/test_copyright.py
+setup.cfg
