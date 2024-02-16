@@ -27,13 +27,3 @@ class SerialVelocityBroadcaster:
         serial_command_string = f"{linear_velocity},{angular_velocity},0,0,0,0,0,0&\n"
 
         self._serial_connection.write(serial_command_string.encode())
-
-
-# if __name__ == "__main__":
-
-#     serial_broadcaster = SerialVelocityBroadcaster()
-
-#     serial_broadcaster.serial_connection = "Serial Object"
-#     serial_broadcaster.cmd_vel = "cmd_vel Object"
-
-#     print(f"{serial_broadcaster.cmd_vel} - {serial_broadcaster.serial_connection}")
