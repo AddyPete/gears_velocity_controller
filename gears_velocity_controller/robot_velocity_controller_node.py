@@ -11,9 +11,11 @@ class VelocityController(Node):
         super().__init__("velocity_controller")
         self.declare_parameter("serial_port", "/dev/ttyUSB0")
         self.declare_parameter("baudrate", 115200)
+        self.declare_parameter("cmd_vel_topic")
 
         self._serial_port = self.get_parameter("serial_port").value
         self._baud_rate = self.get_parameter("baudrate").value
+        self._cmd_vel_topic = self.get_parameter("cmd_vel_topic").value
 
         self._serial_connection = serial.Serial(self._serial_port, self._baud_rate)
 
@@ -23,7 +25,7 @@ class VelocityController(Node):
             self._serial_connection, self._gears_cmd_vel
         )
 
-        self.create_subscription(Twist, "/cmd_vel", self.twist_callback, 10)
+        self.create_subscription(Twist, self._cmd_vel_topic, self.twist_callback, 10)
 
     def twist_callback(self, twist_msg):
         self._gears_cmd_vel.linear.x = twist_msg.linear.x
