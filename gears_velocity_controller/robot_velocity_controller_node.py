@@ -12,7 +12,7 @@ class VelocityController(Node):
         self.declare_parameter("serial_port", "/dev/ttyUSB0")
         self.declare_parameter("baudrate", 115200)
         self.declare_parameter("cmd_vel_topic", "/cmd_vel")
-        self.declare_parameter("drive_mode", "AFRS")
+        self.declare_parameter("drive_mode", "4WS")
 
         self._serial_port = self.get_parameter("serial_port").value
         self._baud_rate = self.get_parameter("baudrate").value
@@ -24,7 +24,7 @@ class VelocityController(Node):
         self._command_string = [0.0, 0.0]
 
         self._serial_velocity_broadcaster = SerialVelocityBroadcaster(
-            self._serial_connection, self._command_string
+            self._serial_connection, self._command_string, self._drive_mode
         )
 
         self.create_subscription(Twist, self._cmd_vel_topic, self.twist_callback, 10)
@@ -34,7 +34,7 @@ class VelocityController(Node):
         linear_velocity = twist_msg.linear.x
         angular_velocity = twist_msg.angular.z
 
-        if self._drive_mode == "AFRS":
+        if self._drive_mode == "4WS":
             self._command_string[0] = linear_velocity
             self._command_string[1] = angular_velocity
             self._serial_velocity_broadcaster.broadcast_velocity()
@@ -49,7 +49,7 @@ class VelocityController(Node):
 
         else:
             self.get_logger().info(
-                "Invalid Type | Please choose between AFRS or differential only"
+                "Invalid Type | Please choose between 4WS or differential only"
             )
 
 
