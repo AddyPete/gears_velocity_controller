@@ -11,7 +11,7 @@ class VelocityController(Node):
         super().__init__("velocity_controller")
         self.declare_parameter("serial_port", "/dev/ttyUSB0")
         self.declare_parameter("baudrate", 115200)
-        self.declare_parameter("cmd_vel_topic")
+        self.declare_parameter("cmd_vel_topic", "/cmd_vel")
 
         self._serial_port = self.get_parameter("serial_port").value
         self._baud_rate = self.get_parameter("baudrate").value
