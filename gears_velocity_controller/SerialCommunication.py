@@ -1,7 +1,7 @@
 class SerialVelocityBroadcaster:
-    def __init__(self, serial_connection=None, cmd_vel=None):
+    def __init__(self, serial_connection=None, cmd_string=None):
         self._serial_connection = serial_connection
-        self._cmd_vel = cmd_vel
+        self._cmd_string = cmd_string
 
     @property
     def serial_connection(self):
@@ -12,17 +12,17 @@ class SerialVelocityBroadcaster:
         self._serial_connection = serial_connection
 
     @property
-    def cmd_vel(self):
-        return self._cmd_vel
+    def cmd_string(self):
+        return self._cmd_string
 
-    @cmd_vel.setter
-    def cmd_vel(self, cmd_vel):
-        self._cmd_vel = cmd_vel
+    @cmd_string.setter
+    def cmd_string(self, cmd_string):
+        self._cmd_string = cmd_string
 
     def broadcast_velocity(self):
 
-        linear_velocity = self._cmd_vel.linear.x
-        angular_velocity = self._cmd_vel.angular.z
+        linear_velocity = self._cmd_string[0]
+        angular_velocity = self._cmd_string[1]
 
         serial_command_string = f"{linear_velocity},{angular_velocity},0,0,0,0,0,0&\n"
 
