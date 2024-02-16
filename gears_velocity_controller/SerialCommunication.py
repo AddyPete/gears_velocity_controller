@@ -1,15 +1,8 @@
 class SerialVelocityBroadcaster:
-    def __init__(self, serial_connection=None, cmd_string=None):
+    def __init__(self, serial_connection=None, cmd_string=None, drive_mode=None):
         self._serial_connection = serial_connection
         self._cmd_string = cmd_string
-
-    @property
-    def serial_connection(self):
-        return self._serial_connection
-
-    @serial_connection.setter
-    def serial_connection(self, serial_connection):
-        self._serial_connection = serial_connection
+        self._drive_mode = drive_mode
 
     @property
     def cmd_string(self):
@@ -21,9 +14,13 @@ class SerialVelocityBroadcaster:
 
     def broadcast_velocity(self):
 
-        linear_velocity = self._cmd_string[0]
-        angular_velocity = self._cmd_string[1]
+        if self._drive_mode == "4WS":
 
-        serial_command_string = f"{linear_velocity},{angular_velocity},0,0,0,0,0,0&\n"
+            serial_command_string = (
+                f"{self._cmd_string[0]},{self._cmd_string[1]},0,0,0,0,0,0&\n"
+            )
+
+        else:
+            serial_command_string = f"{self._cmd_string[0]},{self._cmd_string[1]}&\n"
 
         self._serial_connection.write(serial_command_string.encode())
