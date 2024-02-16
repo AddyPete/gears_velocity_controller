@@ -17,16 +17,18 @@ class VelocityController(Node):
 
         self._serial_connection = serial.Serial(self._serial_port, self._baud_rate)
 
-        self.gears_cmd_vel = Twist()
+        self._gears_cmd_vel = Twist()
 
-        serial_velocity_broadcaster = SerialVelocityBroadcaster(
-            self._serial_connection, self.gears_cmd_vel
+        self._serial_velocity_broadcaster = SerialVelocityBroadcaster(
+            self._serial_connection, self._gears_cmd_vel
         )
 
-        self.gears_cmd_vel.linear.x = 0.5
-        self.gears_cmd_vel.angular.z = 1.0
+        self.create_subscription(Twist, "/cmd_vel", self.twist_callback, 10)
 
-        serial_velocity_broadcaster.broadcast_velocity()
+    def twist_callback(self, twist_msg):
+        self._gears_cmd_vel.linear.x = twist_msg.linear.x
+        self._gears_cmd_vel.angular.z = twist_msg.angular.z
+        self._serial_velocity_broadcaster.broadcast_velocity()
 
 
 def main(args=None):
