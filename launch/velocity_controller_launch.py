@@ -36,8 +36,8 @@ def generate_launch_description():
             joy_params,
             {
                 "use_sim_time": use_sim_time,
-                "scale_linear": scale_linear_x,
-                "scale_angular": scale_angular_yaw,
+                "scale_linear": {"x": scale_linear_x},
+                "scale_angular": {"yaw": scale_angular_yaw},
             },
         ],
         # remappings=[("/cmd_vel", cmd_vel_topic)],
@@ -62,7 +62,7 @@ def generate_launch_description():
         [
             DeclareLaunchArgument(
                 "use_sim_time",
-                default_value=False,
+                default_value="False",
                 description="Use sim time if true",
             ),
             DeclareLaunchArgument(
@@ -77,7 +77,7 @@ def generate_launch_description():
             ),
             DeclareLaunchArgument(
                 "baudrate",
-                default_value=115200,
+                default_value="115200",
                 description="Use sim time if true",
             ),
             DeclareLaunchArgument(
@@ -87,12 +87,12 @@ def generate_launch_description():
             ),
             DeclareLaunchArgument(
                 "scale_linear_x",
-                default_value=0.15,
+                default_value="0.15",
                 description="Use sim time if true",
             ),
             DeclareLaunchArgument(
                 "scale_angular_yaw",
-                default_value=0.15,
+                default_value="0.15",
                 description="Use sim time if true",
             ),
             joy_node,
