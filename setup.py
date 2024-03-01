@@ -9,6 +9,10 @@ data_files.append(
 data_files.append(("share/" + package_name, ["package.xml"]))
 
 data_files.append(
+    ("share/" + package_name + "/launch", ["launch/velocity_controller_launch.py"])
+)
+data_files.append(("config/" + package_name + "/config", ["config/joystick.yaml"]))
+data_files.append(
     (
         "lib/" + package_name,
         ["gears_velocity_controller/SerialCommunication.py"],
