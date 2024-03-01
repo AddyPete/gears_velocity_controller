@@ -16,9 +16,7 @@ class SerialVelocityBroadcaster:
 
         if self._drive_mode == "4WS":
 
-            serial_command_string = (
-                f"{self._cmd_string[0]},{self._cmd_string[1]},0,0,0,0,0,0&\n"
-            )
+            serial_command_string = f"{round(self._cmd_string[0],2)},{round(self._cmd_string[1],2)},0,0,0,0,0,0&\n"
 
         else:
             serial_command_string = f"{self._cmd_string[0]},{self._cmd_string[1]}&\n"
