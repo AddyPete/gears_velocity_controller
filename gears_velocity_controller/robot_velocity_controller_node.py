@@ -6,7 +6,7 @@ from sensor_msgs.msg import Joy
 from SerialCommunication import SerialVelocityBroadcaster
 import serial
 
-ROTATION_INCREMENT = 0.008
+ROTATION_INCREMENT = 0.0075
 MAX_STEER = 0.3
 
 
@@ -107,6 +107,10 @@ class VelocityController(Node):
         elif mode.lower() == "spin":
             self._mode = 1
 
+        self._command_string[0] = 0
+        self._command_string[1] = 0
+        self._command_string[2] = self._mode
+        self._serial_velocity_broadcaster.broadcast_velocity()
         self.get_logger().info(f'Received mode: "{mode} | VAL: {self._mode}"')
 
 
